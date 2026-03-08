@@ -29,7 +29,8 @@ Some of the main workloads running on the cluster:
 - Password manager (Vaultwarden). 
 - Automation and orchestration (n8n, Ansible control node – in progress).  
 
-<img width="1341" height="891" alt="image" src="https://github.com/user-attachments/assets/e50b3c9b-00db-450f-89d6-5ec56955f281" />
+<img width="1196" height="842" alt="image" src="https://github.com/user-attachments/assets/7714c5fd-1e9f-4328-a85c-e93d190b7394" />
+
 
 ## TrueNAS Scale
 
