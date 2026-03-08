@@ -42,7 +42,7 @@ Key ideas:
 
 - Allow ICMP for basic diagnostics (ping).  
 - Allow selected TCP/UDP ports where needed for testing.  
-- Block all
+- Block all 
 
 **From Wi‑Fi / test segments towards internal infrastructure:**
 
