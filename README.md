@@ -13,7 +13,7 @@ Technical documentation of my personal homelab used as a learning, testing and h
 - **Compute:** 3-node Proxmox VE cluster running on low-power mini PCs, plus a dedicated TrueNAS Scale server acting as storage and services host.  
 - **Network:** UniFi Cloud Gateway and managed switch, segmented into multiple VLANs and protected by a default-deny firewall strategy inspired by zero-trust principles 
 - **Remote access:** Self-hosted WireGuard server running on UniFi Cloud Gateway, with dynamic DNS updates via Cloudflare to handle changing public IP addresses.  
-- **Storage & backup:** Central NAS with ZFS and dedicated backup infrastructure (Proxmox Backup Server for VM/LXC and file-level backups for endpoints).  
+- **Storage & backup:** Central NAS with ZFS and dedicated backup infrastructure (Proxmox Backup Server for VM/LXC and UrBackup for file-level backups from endpoints).  
 - **Security & observability:** Centralized logging (Graylog), Wazuh SIEM (in progress), multi-factor authentication, strict access control to management interfaces.  
 - **Monitoring & alerts:** Zabbix for infrastructure metrics, Uptime Kuma for availability checks of all nodes and key services, Pushover mobile notifications for incidents.
 
