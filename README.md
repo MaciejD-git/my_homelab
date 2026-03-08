@@ -11,7 +11,7 @@ Technical documentation of my personal homelab used as a learning, testing and h
 ## High-level architecture
 
 - **Compute:** 3-node Proxmox VE cluster running on low-power mini PCs, plus a dedicated TrueNAS Scale server acting as storage and services host.  
-- **Network:** UniFi Cloud Gateway and managed switch, segmented into multiple VLANs and protected by a default-deny firewall strategy inspired by zero-trust principles (no implicit trust between segments).  
+- **Network:** UniFi Cloud Gateway and managed switch, segmented into multiple VLANs and protected by a default-deny firewall strategy inspired by zero-trust principles 
 - **Remote access:** Self-hosted WireGuard server running on UniFi Cloud Gateway, with dynamic DNS updates via Cloudflare to handle changing public IP addresses.  
 - **Storage & backup:** Central NAS with ZFS and dedicated backup infrastructure (Proxmox Backup Server for VM/LXC and file-level backups for endpoints).  
 - **Security & observability:** Centralized logging (Graylog), Wazuh SIEM (in progress), multi-factor authentication, strict access control to management interfaces.  
@@ -23,15 +23,15 @@ Technical documentation of my personal homelab used as a learning, testing and h
 
 - 3-node Proxmox VE cluster hosting:
   - Core infrastructure services (DNS filtering, reverse proxy, monitoring, logging, password manager).
-  - Application containers (e.g. automation, dashboards, documentation). [file:1]
+  - Application containers (e.g. automation, dashboards, documentation). 
 - TrueNAS Scale server:
-  - Provides storage and runs selected apps/VMs (backup server, monitoring tools, etc.). [file:1]
+  - Provides storage and runs selected apps/VMs (backup server, monitoring tools, etc.). 
 
 ### Networking & remote access
 
 - UniFi-based network with VLANs separating:
-  - Management, servers, admin devices, Wi‑Fi clients and test/isolated networks. [file:17]
-- Zone-based firewall rules enforcing default-deny between segments and only explicitly allowing necessary flows (DNS, HTTPS via reverse proxy, VPN, management access). [file:17][web:30]
+  - Management, servers, admin devices, Wi‑Fi clients and test/isolated networks. 
+- Zone-based firewall rules enforcing default-deny between segments and only explicitly allowing necessary flows (DNS, HTTPS via reverse proxy, VPN, management access). 
 - WireGuard VPN:
   - Terminates on UniFi Cloud Gateway.
   - Dynamic DNS via Cloudflare keeps a stable hostname pointing to a changing public IP.  
@@ -39,25 +39,25 @@ Technical documentation of my personal homelab used as a learning, testing and h
 ### Security, logging and monitoring
 
 - **Central logging:**  
-  - Graylog aggregates logs from infrastructure and services for troubleshooting and security analysis. [file:1][web:29]
+  - Graylog aggregates logs from infrastructure and services for troubleshooting and security analysis.
 - **SIEM / XDR:**  
-  - Wazuh deployed and agents connected; configuration and use-cases (alert rules, dashboards) are being expanded as part of ongoing work. [web:23][web:29]
+  - Wazuh deployed and agents connected; configuration and use-cases (alert rules, dashboards) are being expanded as part of ongoing work. 
 - **Monitoring:**  
-  - Zabbix for host and service metrics using built-in templates. [file:1]  
-  - Uptime Kuma to continuously check reachability of all nodes and key services. [web:18][web:25]
-  - Pushover integration used by Uptime Kuma to push incident notifications to a mobile device. [web:18][web:31]
+  - Zabbix for host and service metrics using built-in templates.  
+  - Uptime Kuma to continuously check reachability of all nodes and key services.
+  - Pushover integration used by Uptime Kuma to push incident notifications to a mobile device.
 - **Access control and hardening:**  
   - No inbound ports are exposed directly to the internet; all remote access goes through WireGuard.  
-  - Management interfaces are restricted to specific VLANs and clients. [file:17]  
-  - 2FA/YubiKey and least-privilege accounts for administrative access where supported. [file:1]
+  - Management interfaces are restricted to specific VLANs and clients.
+  - 2FA/YubiKey and least-privilege accounts for administrative access where supported. 
 
 ## Backup and recovery
 
 - Proxmox Backup Server:
-  - Deduplicated backups of all Proxmox VMs and containers on storage hosted by TrueNAS. [file:1]
-  - Scheduled backups with retention and periodic verification jobs to ensure restore integrity. [file:1]
+  - Deduplicated backups of all Proxmox VMs and containers on storage hosted by TrueNAS. 
+  - Scheduled backups with retention and periodic verification jobs to ensure restore integrity.
 - Endpoint backups:
-  - File-level backups from workstations to NAS. [file:1]
+  - File-level backups from workstations to NAS.
 
 ## Documentation
 
@@ -75,8 +75,8 @@ This repository focuses on architecture and operations rather than full configur
 
 Planned improvements and learning objectives:
 
-- Enable **high availability** across all 3 Proxmox nodes for selected critical workloads. [file:1]
-- Finalize **Wazuh** configuration (rules, dashboards, alerting workflows) to strengthen security monitoring and incident response capabilities. [web:23][web:29]
-- Introduce more **automation** using n8n for workflows and Ansible for configuration management and provisioning. [file:1]
+- Enable **high availability** across all 3 Proxmox nodes for selected critical workloads. 
+- Finalize **Wazuh** configuration (rules, dashboards, alerting workflows) to strengthen security monitoring and incident response capabilities. 
+- Introduce more **automation** using n8n for workflows and Ansible for configuration management and provisioning. 
 
 > Sensitive data (passwords, private keys, detailed configs) is intentionally omitted. The focus here is on design, operations and security practices.
