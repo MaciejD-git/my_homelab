@@ -37,7 +37,9 @@ A dedicated TrueNAS Scale server complements the Proxmox cluster:
 
 - Provides network storage for backups and selected workloads.  
 - Hosts applications and VMs such as:
-  - Proxmox Backup Server.  
+  - Proxmox Backup Server.
+  - UrBackup server for file-level backups
+  - Nextcloud  
   - File-level backup solution for endpoints.  
   - Disk health and SMART monitoring.  
 
