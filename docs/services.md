@@ -53,10 +53,10 @@ Wazuh adds SIEM/XDR capabilities on top of raw logs and agent telemetry.
 - Used to experiment with security monitoring: detection rules, file integrity monitoring, suspicious activity alerts.
 - Configuration (rules, dashboards, alerting) is an ongoing project and part of the learning goals.
 
+List of users
 <img width="1900" height="669" alt="image" src="https://github.com/user-attachments/assets/e3bae9c4-732f-489f-8b7c-8112f55e264d" />
 
-
-
+Example Dashboard
 <img width="1914" height="918" alt="image" src="https://github.com/user-attachments/assets/fb10bcd4-3eff-4f3b-8ff5-856c7bb5d865" />
 
 
