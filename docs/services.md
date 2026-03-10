@@ -16,10 +16,9 @@ From an operational perspective:
 
 - Uses primarily built-in templates to monitor Proxmox nodes, storage and selected services.
 - Provides a quick overview of host status (up/down, CPU, RAM, disk usage).
-- Generates email alerts for key issues (e.g. node unavailable, filesystem nearly full).
 
 > **Suggested screenshots:**
-> - Zabbix dashboard or host list showing your Proxmox/TrueNAS nodes.
+> - Zabbix dashboard or host list showing your Proxmox nodes.
 > - Example graph or problem list.
 
 ### Uptime monitoring – Uptime Kuma + Pushover
@@ -67,7 +66,7 @@ Wazuh adds SIEM/XDR capabilities on top of raw logs and agent telemetry.
 Vaultwarden provides self-hosted password and secret management.
 
 - Stores credentials for homelab services, infrastructure logins and personal accounts.
-- Protected with strong master password and 2FA.
+- Protected with strong master password and 2FA based on ubikey.
 - Included in the backup strategy to ensure secrets can be restored in case of disaster.
 
 > **Suggested screenshots:**
@@ -92,7 +91,7 @@ Proxmox Backup Server (PBS) provides the interface and logic for VM/CT backups.
 
 ### UrBackup – endpoint backups
 
-UrBackup is used for file-level backups from desktops and laptops.
+UrBackup is used for file-level backups from desktops and laptops running Windows.
 
 - Agents run on endpoints and periodically back up important directories to the NAS.
 - Provides a web UI to see backup status, history and to restore individual files or full directory trees.
@@ -104,17 +103,13 @@ UrBackup is used for file-level backups from desktops and laptops.
 
 ## Automation & workflows
 
-### n8n – workflow automation
+### n8n – workflow automation (planned)
 
-n8n is the main workflow automation tool in the homelab.
+n8n is planned as the main workflow automation tool in the homelab.
 
-- Used to experiment with integrating services (APIs, webhooks, notifications).
-- Suitable for building small automations (e.g. reacting to monitoring/logging events, scheduled tasks).
-- Planned to be integrated more tightly with monitoring and security tooling over time.
-
-> **Suggested screenshots:**
-> - n8n main UI.
-> - Simple example workflow graph.
+- Currently deployed but not yet used for production workflows.
+- Intended for experimenting with integrations between services (APIs, webhooks, notifications).
+- Will be used to recreat usefull workflows that could be used in companys's production enviorment
 
 ### Ansible – configuration management (planned)
 
@@ -122,6 +117,3 @@ Ansible is planned for configuration management and provisioning.
 
 - Will be used to codify server and service configuration in playbooks and roles.
 - Fits into the long-term goal of making the homelab reproducible and easier to rebuild.
-
-> **Suggested screenshot (later):**
-> - Example playbook or inventory once Ansible is in active use.
