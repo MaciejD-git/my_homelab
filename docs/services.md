@@ -29,9 +29,7 @@ Uptime Kuma complements Zabbix by focusing on simple, fast availability checks.
 - Uses Pushover integration to send push notifications to a mobile app on incidents.
 - Helps quickly detect issues like VPN or reverse proxy being down even before deeper metrics show up.
 
-> **Suggested screenshots:**
-> - Uptime Kuma monitor list with statuses for Proxmox/TrueNAS/Graylog/etc.
-> - Notification configuration showing Pushover as a notification channel.
+<img width="1901" height="833" alt="image" src="https://github.com/user-attachments/assets/2c09bd7a-0a29-441c-8660-15d7e115ea69" />
 
 ## Logging & security analytics
 
@@ -43,9 +41,9 @@ Graylog is the central log aggregation point.
 - Provides dashboards and search capabilities for troubleshooting and correlation of events.
 - Acts as the base layer for security-related log analysis together with Wazuh.
 
-> **Suggested screenshots:**
-> - Graylog main dashboard with overview of incoming logs.
-> - Example search or dashboard focused on one component (e.g. Proxmox or WireGuard).
+Example Dashboard
+<img width="1858" height="865" alt="image" src="https://github.com/user-attachments/assets/406d4e1b-9601-480b-95c6-01861c99b1a8" />
+
 
 ### SIEM / XDR – Wazuh
 
@@ -55,9 +53,10 @@ Wazuh adds SIEM/XDR capabilities on top of raw logs and agent telemetry.
 - Used to experiment with security monitoring: detection rules, file integrity monitoring, suspicious activity alerts.
 - Configuration (rules, dashboards, alerting) is an ongoing project and part of the learning goals.
 
-> **Suggested screenshots:**
-> - Wazuh dashboard showing security events over time.
-> - Agents view listing connected systems.
+<img width="1900" height="669" alt="image" src="https://github.com/user-attachments/assets/e3bae9c4-732f-489f-8b7c-8112f55e264d" />
+
+<img width="1914" height="918" alt="image" src="https://github.com/user-attachments/assets/fb10bcd4-3eff-4f3b-8ff5-856c7bb5d865" />
+
 
 ## Identity & secrets
 
@@ -69,9 +68,7 @@ Vaultwarden provides self-hosted password and secret management.
 - Protected with strong master password and 2FA based on ubikey.
 - Included in the backup strategy to ensure secrets can be restored in case of disaster.
 
-> **Suggested screenshots:**
-> - Vaultwarden login screen.
-> - Vault overview with all sensitive details blurred/hidden.
+<img width="1902" height="868" alt="image" src="https://github.com/user-attachments/assets/9da3837c-0fe3-403b-8115-4a5e7284506a" />
 
 ## Backup frontends
 
@@ -85,9 +82,7 @@ Proxmox Backup Server (PBS) provides the interface and logic for VM/CT backups.
 - Allows quick verification and test restores of selected guests.
 - Runs on storage provided by TrueNAS, keeping backup infrastructure separate from the main Proxmox nodes.
 
-> **Suggested screenshots:**
-> - PBS dashboard showing datastore usage and recent tasks.
-> - Backup task list for one node.
+<img width="1794" height="915" alt="image" src="https://github.com/user-attachments/assets/da88dcec-47e5-40ed-bb99-d1c9677fb0ff" />
 
 ### UrBackup – endpoint backups
 
@@ -97,9 +92,7 @@ UrBackup is used for file-level backups from desktops and laptops running Window
 - Provides a web UI to see backup status, history and to restore individual files or full directory trees.
 - Complements VM/CT backups by protecting user data outside the virtual infrastructure.
 
-> **Suggested screenshots:**
-> - UrBackup web UI with list of clients and backup status.
-> - Example backup history for one endpoint.
+<img width="1898" height="503" alt="image" src="https://github.com/user-attachments/assets/7b77764c-eeaa-4ab1-828a-c9bc1464bf4b" />
 
 ## Automation & workflows
 
