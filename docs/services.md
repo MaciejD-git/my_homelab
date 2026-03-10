@@ -55,6 +55,8 @@ Wazuh adds SIEM/XDR capabilities on top of raw logs and agent telemetry.
 
 <img width="1900" height="669" alt="image" src="https://github.com/user-attachments/assets/e3bae9c4-732f-489f-8b7c-8112f55e264d" />
 
+
+
 <img width="1914" height="918" alt="image" src="https://github.com/user-attachments/assets/fb10bcd4-3eff-4f3b-8ff5-856c7bb5d865" />
 
 
