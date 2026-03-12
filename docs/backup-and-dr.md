@@ -85,24 +85,22 @@ TrueNAS is responsible for the underlying storage that hosts PBS data and other 
 
 ## Endpoint backups – UrBackup
 
-### Design
+While Proxmox Backup Server protects virtual machines and containers, UrBackup is responsible for user data on physical endpoints.
 
-- UrBackup runs as a central backup server for desktops and laptops in the homelab.
-- Endpoints use the UrBackup client to perform file-level backups of important directories to NAS storage.
-- This complements PBS by protecting user data that is not inside VMs/containers.
+- Covers Windows desktops and laptops, focusing on user profiles and important data directories rather than full system images.
+- Acts as a second layer of protection in case data is lost or corrupted on a workstation (accidental deletion, ransomware, disk failure).
+- Restores are typically done at the file/folder level, which is faster and more practical than rebuilding whole machines from images.
 
-> **Suggested screenshots:**
-> - UrBackup web UI showing list of clients and their status.
-> - Example backup history for one endpoint.
+UrBackup’s detailed UI and configuration are described in `docs/services.md`. Here it is considered as part of the overall backup and recovery strategy.
 
 ### Scheduling and retention
 
-- Backup schedules are configured per client (e.g. regular incremental backups with less frequent full backups). [web:55]
+- Backup schedules are configured per client (e.g. regular incremental backups with less frequent full backups).
 - Retention policies ensure that multiple restore points are available without growing indefinitely.
 - The focus is on being able to recover user data from at least the last few weeks/months, depending on the endpoint.
 
-> **Suggested screenshot:**
-> - UrBackup settings for one client (schedule + retention).
+<img width="1172" height="811" alt="image" src="https://github.com/user-attachments/assets/56a39468-9c55-4760-831d-bef01daa9dd5" />
+<img width="1174" height="647" alt="image" src="https://github.com/user-attachments/assets/46abb46f-5f55-4b63-a62a-ec81623fdb27" />
 
 ## Restore strategy and testing
 
