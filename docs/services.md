@@ -17,9 +17,8 @@ From an operational perspective:
 - Uses primarily built-in templates to monitor Proxmox nodes, storage and selected services.
 - Provides a quick overview of host status (up/down, CPU, RAM, disk usage).
 
-> **Suggested screenshots:**
-> - Zabbix dashboard or host list showing your Proxmox nodes.
-> - Example graph or problem list.
+<img width="1895" height="906" alt="image" src="https://github.com/user-attachments/assets/fe5e7938-3dac-4cc1-8598-5e04dc4d8b4b" />
+
 
 ### Uptime monitoring – Uptime Kuma + Pushover
 
