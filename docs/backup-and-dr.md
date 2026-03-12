@@ -2,10 +2,13 @@
 
 ## Overview
 
-This document describes how virtual machines, containers and endpoints are backed up in the homelab, and how I approach verification and restore testing.
+TThis document describes how virtual machines, containers and endpoints are backed up in the homelab, and how backup integrity is verified over time.
 
-The goal is to be able to quickly recover from failures of individual services, nodes or the main storage system.
+The main goals are:
 
+- Be able to quickly recover from failures of individual services, nodes or the main storage.
+- Detect backup/storage issues early through regular verification and SMART/ZFS checks.
+  
 ## VM and container backups – Proxmox Backup Server
 
 ### Design
@@ -14,27 +17,71 @@ The goal is to be able to quickly recover from failures of individual services, 
 - PBS runs as a VM on storage provided by TrueNAS, so backups are stored outside of the Proxmox cluster itself.
 - Backups are deduplicated and compressed to optimize storage usage.
 
-> **Suggested screenshots:**
-> - PBS dashboard showing datastore usage and recent tasks.
-> - Proxmox backup job configuration for one node (schedule + target PBS datastore).
+<img width="1885" height="490" alt="image" src="https://github.com/user-attachments/assets/5eb64b80-ed98-4867-af06-7671eb37bb6c" />
 
-### Scheduling and retention
+### Backup schedule
 
-- Regular backup jobs run from each Proxmox node to PBS on a defined schedule (e.g. nightly).
-- Retention is configured to keep a rolling history of snapshots (daily/weekly/monthly) rather than “keep everything forever”.
-- The aim is to balance storage usage with the ability to roll back to several recent points in time.
+Daily backup jobs run from each Proxmox node to PBS:
 
-> **Suggested screenshot:**
-> - PBS datastore view showing backup groups and retention settings.
+- `serwerproxmox`  
+  - 01:00 – backup of all VMs and containers (daily).  
+- `serwerproxmox2`  
+  - 01:15 – backup of all VMs and containers (daily).  
+  - 01:30 – backup of all VMs and containers (daily, additional window for specific workloads if needed).
 
-### Verification
+This staggered schedule reduces load on PBS and storage by not starting all jobs at the same time.
 
-- PBS verify jobs are scheduled to automatically check the integrity of newly created backups. [web:48][web:51]
-- Periodic re-verification is configured to re-check older backups and catch potential bit rot or storage issues. [web:48][web:51]
-- Verification logs are monitored, and failed verifies are treated as incidents requiring investigation.
+<img width="1423" height="145" alt="image" src="https://github.com/user-attachments/assets/b9df8ccf-ef96-407f-a4ea-7cea4e8a43b7" />
 
-> **Suggested screenshot:**
-> - PBS “Verify Jobs” tab with an example job and recent run history.
+### Retention
+
+PBS retention is configured to keep a rolling history of snapshots (daily/weekly/monthly) instead of storing every backup indefinitely.
+
+- Recent backups (last days) are kept densely.
+- Older backups are pruned according to the retention policy to free space while preserving meaningful restore points.
+
+<img width="724" height="274" alt="image" src="https://github.com/user-attachments/assets/cdd49f09-2e52-4bbd-8ad9-549f936d3f21" />
+
+## Backup maintenance and verification
+
+To ensure backups remain valid and storage healthy, additional maintenance jobs are scheduled.
+
+### Garbage collection on PBS
+
+- Every day at 02:00 – PBS runs a **garbage collection** job.
+- This physically removes data from pruned snapshots and reclaims storage space.
+
+### Verify jobs (new backups)
+
+- Every day at 03:00 – PBS runs a **verify job** for backups created between 01:00 and 01:40.
+- The verify job checks the integrity of newly created backup chunks and ensures they can be read back correctly.
+- Failed verifies are treated as incidents and require investigation (storage issues, network problems, etc.).
+
+### Periodic re-verify
+
+- Every 14 days at 03:00 – a **re-verify** job is executed, re-verifying all existing backups on PBS. 
+- This helps detect long-term issues such as bit rot or silent storage corruption.
+
+in the right corner you see a message that verification has been successfully completed
+<img width="1700" height="409" alt="image" src="https://github.com/user-attachments/assets/bc981623-6fc4-4768-8b18-676d6ba7e54e" />
+
+## Storage health – TrueNAS (SMART & ZFS)
+
+TrueNAS is responsible for the underlying storage that hosts PBS data and other services. To keep it healthy, regular SMART and ZFS jobs are scheduled.
+
+### Weekly checks
+
+- Every Sunday at 00:00 – a **ZFS scrub** is run on the TrueNAS pool.  
+  - Scrub checks data integrity and fixes correctable errors on disk.  
+- Every Sunday at 04:00 – a cron job triggers a **SMART short test** on all disks.  
+  - This ensures that when Scrutiny reads SMART data, it always works with fresh test results.
+
+### Monthly checks
+
+- On the 1st day of each month at 05:00 – a cron job runs a **SMART long test** on all disks.  
+  - This is a more thorough surface scan and can take several hours, but helps detect early disk issues.
+
+<img width="1395" height="884" alt="image" src="https://github.com/user-attachments/assets/cdfb6745-e0ce-4f09-a86a-b82bf408300b" />
 
 ## Endpoint backups – UrBackup
 
@@ -42,7 +89,7 @@ The goal is to be able to quickly recover from failures of individual services, 
 
 - UrBackup runs as a central backup server for desktops and laptops in the homelab.
 - Endpoints use the UrBackup client to perform file-level backups of important directories to NAS storage.
-- This complements PBS by protecting user data that is not inside VMs/containers. [web:52][web:61]
+- This complements PBS by protecting user data that is not inside VMs/containers.
 
 > **Suggested screenshots:**
 > - UrBackup web UI showing list of clients and their status.
