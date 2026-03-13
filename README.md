@@ -1,4 +1,4 @@
-# Placelab Homelab
+# Homelab
 
 Technical documentation of my personal homelab used as a learning, testing and hardening environment.
 
