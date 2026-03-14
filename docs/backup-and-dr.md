@@ -104,23 +104,15 @@ UrBackup’s detailed UI and configuration are described in `docs/services.md`. 
 
 ## Restore strategy and testing
 
-### Restore scenarios
+Restore testing approach:
 
-I treat the following scenarios as primary recovery targets:
-
-- Restore of a single VM or container from PBS after accidental misconfiguration or failure.
-- Restore of individual files or directories from UrBackup for endpoints.
-- Restore of core services (e.g. reverse proxy, DNS, monitoring) on a fresh VM if the original host is lost.
-
-### Testing restores
-
-- Test restores from PBS are performed periodically by restoring selected VMs/CTs to a temporary location and verifying that they boot and services start correctly. [web:56][web:53]
-- UrBackup restores are tested by recovering files to a test path and checking data integrity. [web:52][web:61]
-- Observations and any issues found during restore tests are used to adjust backup settings or documentation.
-
-> **Suggested screenshots:**
-> - Proxmox restore dialog for a VM/CT (with a test destination).
-> - UrBackup restore screen for a file/directory restore.
+- For PBS:
+  - A few times per year I pick a non-critical VM or container (for example a lab service) and restore it from PBS to a temporary VM/CT ID.
+  - I then boot it, log in and verify that the main service(s) start correctly and that data is accessible.
+- For UrBackup:
+  - I periodically restore a sample of files from one endpoint to a test directory (not overwriting the originals) and compare them to the live copies.
+  - This validates that backups are actually usable and not silently corrupted.
+- If any issues are found during these tests (slow restores, missing data, verify errors), I review the backup configuration, schedules or retention and update the documentation accordingly.
 
 ## Documentation and DR notes
 
