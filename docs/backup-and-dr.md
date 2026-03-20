@@ -26,8 +26,9 @@ Daily backup jobs run from each Proxmox node to PBS:
 - `serwerproxmox`  
   - 01:00 – backup of all VMs and containers (daily).  
 - `serwerproxmox2`  
-  - 01:15 – backup of all VMs and containers (daily).  
-  - 01:30 – backup of all VMs and containers (daily, additional window for specific workloads if needed).
+  - 01:15 – backup of all VMs and containers (daily).
+- `serwerproxmox3`   
+  - 01:30 – backup of all VMs and containers (daily).
 
 This staggered schedule reduces load on PBS and storage by not starting all jobs at the same time.
 
@@ -96,7 +97,7 @@ TrueNAS is responsible for the underlying storage that hosts PBS data and other 
 
 - The client uses a local administrator account with full rights.
 - Remote access for deployment and management relies on hostname/IP reachability and the required Windows remote management services being available.
-- In practice, the login format is `CLIENT-NAME\Administrator` or `CLIENT-NAME\veeam_admin`, not `DOMAIN\user`.
+- In practice, the login format is `CLIENT-NAME\Administrator` or `CLIENT-NAME\veeam_user`, not `DOMAIN\user`.
 - `LocalAccountTokenFilterPolicy = 1` is set on the client to disable Remote UAC filtering for local administrative access.
 - File and Printer Sharing firewall rules are enabled on the client so Veeam can reach administrative shares such as `\\IP\admin$`.
 - Backup agent deployment is handled by Veeam, with Changed Block Tracking enabled where supported.
