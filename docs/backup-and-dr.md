@@ -83,40 +83,53 @@ TrueNAS is responsible for the underlying storage that hosts PBS data and other 
 
 <img width="1395" height="884" alt="image" src="https://github.com/user-attachments/assets/cdfb6745-e0ce-4f09-a86a-b82bf408300b" />
 
-## Endpoint backups – UrBackup
+## Endpoint backups – Veeam Backup & Replication
 
-While Proxmox Backup Server protects virtual machines and containers, UrBackup is responsible for user data on physical endpoints.
+### Design
 
-- Covers Windows desktops and laptops, focusing on user profiles and important data directories rather than full system images.
-- Acts as a second layer of protection in case data is lost or corrupted on a workstation (accidental deletion, ransomware, disk failure).
-- Restores are typically done at the file/folder level, which is faster and more practical than rebuilding whole machines from images.
+- End-user backup for the Windows workstation is handled by Veeam Backup & Replication Community Edition.
+- The Veeam server runs as a Windows Server 2025 VM on Proxmox and is kept in a workgroup, not joined to a domain.
+- The backup repository is hosted on TrueNAS and exposed over SMB.
+- The protected client is managed through a Veeam protection group and agent-based workflow.
 
-UrBackup’s detailed UI and configuration are described in `docs/services.md`. Here it is considered as part of the overall backup and recovery strategy.
+### Access and deployment model
 
-### Scheduling and retention
+- The client uses a local administrator account with full rights.
+- Remote access for deployment and management relies on hostname/IP reachability and the required Windows remote management services being available.
+- In practice, the login format is `CLIENT-NAME\Administrator` or `CLIENT-NAME\veeam_admin`, not `DOMAIN\user`.
+- `LocalAccountTokenFilterPolicy = 1` is set on the client to disable Remote UAC filtering for local administrative access.
+- File and Printer Sharing firewall rules are enabled on the client so Veeam can reach administrative shares such as `\\IP\admin$`.
+- Backup agent deployment is handled by Veeam, with Changed Block Tracking enabled where supported.
+- Automatic updates for installed components are enabled to keep the agent and related components current.
+- Automatic reboot after deployment is left disabled so restarts remain under manual control.
 
-- Backup schedules are configured per client (e.g. regular incremental backups with less frequent full backups).
-- Retention policies ensure that multiple restore points are available without growing indefinitely.
-- The focus is on being able to recover user data from at least the last few weeks/months, depending on the endpoint.
+### Protection group and discovery
 
-<img width="1172" height="811" alt="image" src="https://github.com/user-attachments/assets/56a39468-9c55-4760-831d-bef01daa9dd5" />
-<img width="1174" height="647" alt="image" src="https://github.com/user-attachments/assets/46abb46f-5f55-4b63-a62a-ec81623fdb27" />
+- The protected computer is included in a Veeam protection group.
+- Discovery / rescan can be scheduled daily or at another low frequency, since this is a single workstation and does not require constant polling.
+- The protection group is configured to install the backup agent and, where useful, the Changed Block Tracking driver.
+- CDP agent deployment is disabled, since the workstation does not need replication or CDP features.
+- After deployment, a reboot is performed if Veeam reports that it is required, and then the rescan is repeated until it completes cleanly.
 
-## Restore strategy and testing
+### Backup policy
 
-Restore testing approach:
+- Backups run as forward incremental jobs with synthetic full backups created periodically.
+- Active full backups are disabled to avoid unnecessary load on the workstation and network.
+- The job is scheduled once per day, tied to typical workstation usage.
+- If the computer is powered off at the scheduled time, the backup runs when the machine is next powered on.
+- After the backup finishes, the machine is left running.
 
-- For PBS:
-  - A few times per year I pick a non-critical VM or container (for example a lab service) and restore it from PBS to a temporary VM/CT ID.
-  - I then boot it, log in and verify that the main service(s) start correctly and that data is accessible.
-- For UrBackup:
-  - I periodically restore a sample of files from one endpoint to a test directory (not overwriting the originals) and compare them to the live copies.
-  - This validates that backups are actually usable and not silently corrupted.
-- If any issues are found during these tests (slow restores, missing data, verify errors), I review the backup configuration, schedules or retention and update the documentation accordingly.
+### Retention and maintenance
 
-## Documentation and DR notes
+- The retention policy keeps backups for 14 days, excluding days when no backup was taken.
+- In practice, this gives roughly two weeks of restore points for a regularly used PC.
+- Storage-level corruption guard / health check is enabled to verify backup integrity and catch damaged blocks.
+- Full backup file maintenance such as defragmentation and compacting is disabled, because the benefit is small in this setup compared to the extra I/O and space usage.
 
-- Backup configuration (PBS jobs, verify jobs, UrBackup settings) is documented so it can be recreated if needed.
-- Critical secrets for accessing PBS, UrBackup and storage are stored in Vaultwarden and backed up as part of the overall strategy.
-- Future work includes formalizing disaster recovery runbooks (step-by-step procedures) for restoring core services on new hardware.
+### Restore strategy
 
+- The main restore target is the Windows workstation itself and its user data.
+- The solution is intended to provide quick recovery from accidental deletion, file corruption, workstation failure or other endpoint incidents.
+- Restore tests should be documented once the first full workflow is validated.
+
+<img width="903" height="507" alt="image" src="https://github.com/user-attachments/assets/1f564c53-3b54-4e4b-872b-1d773f262dde" />
