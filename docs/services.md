@@ -36,7 +36,7 @@ Uptime Kuma complements Zabbix by focusing on simple, fast availability checks.
 
 Graylog is the central log aggregation point.
 
-- Collects logs from servers, containers and selected applications.
+- Collects logs mainly from Unifi gateway
 - Provides dashboards and search capabilities for troubleshooting and correlation of events.
 - Acts as the base layer for security-related log analysis together with Wazuh.
 
@@ -85,15 +85,15 @@ Proxmox Backup Server (PBS) provides the interface and logic for VM/CT backups.
 
 <img width="1794" height="915" alt="image" src="https://github.com/user-attachments/assets/da88dcec-47e5-40ed-bb99-d1c9677fb0ff" />
 
-### UrBackup – endpoint backups
+### Veeam Backup and Replication – endpoint backups
 
-UrBackup is used for file-level backups from desktops and laptops running Windows.
+Veeam is used for file-level backups from desktops and laptops running Windows.
 
 - Agents run on endpoints and periodically back up important directories to the NAS.
-- Provides a web UI to see backup status, history and to restore individual files or full directory trees.
+- Provides a web UI to see backup status, rescan status, jobs status and many other things.
 - Complements VM/CT backups by protecting user data outside the virtual infrastructure.
 
-<img width="1898" height="503" alt="image" src="https://github.com/user-attachments/assets/7b77764c-eeaa-4ab1-828a-c9bc1464bf4b" />
+<img width="905" height="518" alt="image" src="https://github.com/user-attachments/assets/ab1dcc41-f270-481a-91ec-1a062e32c377" />
 
 ## Automation & workflows
 
