@@ -17,7 +17,7 @@ The network is segmented into logical VLANs separating management, servers, admi
 | 30      | Admin      | 192.168.30.0/24  | Admin workstation(s) with full access to management interfaces. |
 | 5       | WiFi LAN   | 192.168.5.0/24   | Main Wi‑Fi network (AP + extender, no VLAN tagging, home/guest/IoT devices). |
 | 20      | Test       | 192.168.20.0/24  | Isolated test / backup network with very limited access. |
-
+| VPN     | Wireguard  | 192.168.100.0/24 | Virtual private network users. |
 <img width="1354" height="265" alt="image" src="https://github.com/user-attachments/assets/63dcd626-3c16-4617-8051-fa286d3f3047" />
 
 ## Switching and Wi‑Fi
