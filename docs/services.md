@@ -37,7 +37,7 @@ This makes it easier to plan maintenance windows and keep the environment consis
 
 Uptime Kuma complements Zabbix by focusing on simple, fast availability checks.
 
-- Monitors reachability of all homelab nodes and key web services (HTTP(S), ICMP, TCP).
+- Monitors reachability of all homelab nodes and key web services (HTTP(S), ICMP, TCP, Docker).
 - Uses Pushover integration to send push notifications to a mobile app on incidents.
 - Helps quickly detect issues like VPN or reverse proxy being down even before deeper metrics show up.
 
