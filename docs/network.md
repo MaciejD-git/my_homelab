@@ -70,7 +70,7 @@ Remote access to the homelab is provided by WireGuard running directly on the Un
 - A Cloudflare Dynamic DNS setup keeps a hostname updated with the current public IP (no static IP required).  
 - No ports other than WireGuard are exposed directly; management interfaces are only reachable once connected via VPN.
 
-<img width="964" height="851" alt="wireguard konfig" src="https://github.com/user-attachments/assets/cdd8cd41-46ab-4720-b7ce-5a99958fb28f" />
+<img width="898" height="588" alt="Screenshot 2026-03-23 183611" src="https://github.com/user-attachments/assets/949527a3-9c18-4272-ae60-d4bf2f7f7882" />
 <img width="1297" height="348" alt="image" src="https://github.com/user-attachments/assets/ae437b68-5aee-408f-b582-5d3b70720464" />
 
 ## Management surface
