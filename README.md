@@ -57,7 +57,15 @@ Technical documentation of my personal homelab used as a learning, testing and h
   - Deduplicated backups of all Proxmox VMs and containers on storage hosted by TrueNAS. 
   - Scheduled backups with retention and periodic verification jobs to ensure restore integrity.
 - Endpoint backups:
-  - File-level backups from workstations to NAS.
+  - File-level backups from workstations to NAS using Veeam Backup and Replication.
+
+## Configuration approach
+
+A significant part of the environment is managed through declarative configuration files.
+
+- Dockerized services are defined with Docker Compose and lxc.
+- YAML-based configuration
+- This approach makes services easier to recreate, update and troubleshoot.
 
 ## Documentation
 
@@ -67,7 +75,6 @@ This repository focuses on architecture and operations rather than full configur
 - `docs/compute.md` – Proxmox cluster, TrueNAS and main workloads.  
 - `docs/services.md` – Core services (DNS filtering, reverse proxy, monitoring, logging, automation).  
 - `docs/backup-and-dr.md` – Backup schedules, retention and restore approach.  
-- `docs/security.md` – Access control, MFA, logging, SIEM and zero-trust principles.
 
 (Specific paths may evolve as the homelab grows.)
 
