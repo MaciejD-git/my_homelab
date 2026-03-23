@@ -97,9 +97,6 @@ TrueNAS is responsible for the underlying storage that hosts PBS data and other 
 
 - The client uses a local administrator account with full rights.
 - Remote access for deployment and management relies on hostname/IP reachability and the required Windows remote management services being available.
-- In practice, the login format is `CLIENT-NAME\Administrator` or `CLIENT-NAME\veeam_user`, not `DOMAIN\user`.
-- `LocalAccountTokenFilterPolicy = 1` is set on the client to disable Remote UAC filtering for local administrative access.
-- File and Printer Sharing firewall rules are enabled on the client so Veeam can reach administrative shares such as `\\IP\admin$`.
 - Backup agent deployment is handled by Veeam, with Changed Block Tracking enabled where supported.
 - Automatic updates for installed components are enabled to keep the agent and related components current.
 - Automatic reboot after deployment is left disabled so restarts remain under manual control.
