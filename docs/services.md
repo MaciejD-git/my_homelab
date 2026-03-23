@@ -19,6 +19,19 @@ From an operational perspective:
 
 <img width="1895" height="906" alt="image" src="https://github.com/user-attachments/assets/fe5e7938-3dac-4cc1-8598-5e04dc4d8b4b" />
 
+## Patch management
+
+### PatchMon – update visibility
+
+PatchMon is used to monitor patch and package update status across the Linux-based infrastructure in the homelab.
+
+- Provides a centralized view of pending updates for containers, virtual machines and hypervisors.
+- Helps identify which systems require regular package updates or urgent security patching.
+- Adds operational visibility that complements uptime and infrastructure monitoring.
+
+This makes it easier to plan maintenance windows and keep the environment consistent over time.
+
+<img width="1896" height="851" alt="image" src="https://github.com/user-attachments/assets/e836c018-10f0-4ca5-8a09-8fb2da47805e" />
 
 ### Uptime monitoring – Uptime Kuma + Pushover
 
